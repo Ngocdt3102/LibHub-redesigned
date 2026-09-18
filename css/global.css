@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { width:min(var(--container), calc(100% - 36px)); margin:auto; }
+main { min-height:calc(100vh - 145px); }
+.page-section { padding:56px 0; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:26px; }
+.section-head h1 { font-size:clamp(28px,4vw,36px); font-weight:800; letter-spacing:-.03em; }
+.section-head h2 { font-size:28px; font-weight:700; letter-spacing:-.03em; }
+.section-head p { color:var(--muted); margin-top:4px; font-size:15px; }
+.section-head > a { color:var(--primary); font-weight:600; font-size:14px; white-space:nowrap; }
+
+h1,h2,h3 { color:var(--text); }
+h3 { font-size:20px; font-weight:700; letter-spacing:-.01em; }
+
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 18px; border-radius:var(--radius-md); font-weight:600; font-size:14.5px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+}
+.btn-primary {
+  color:white; background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  box-shadow:0 6px 16px rgba(99,102,241,.28);
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 26px rgba(99,102,241,.32); }
+.btn-primary:active { transform:translateY(0); }
+.btn-primary:disabled { opacity:.65; cursor:not-allowed; transform:none; }
+.btn-light { background:var(--surface); border:1px solid var(--border); color:var(--text-soft); }
+.btn-light:hover { border-color:var(--primary-light); background:var(--primary-soft); color:var(--primary-dark); }
+.btn-danger { background:#fef2f2; color:#b91c1c; }
+.btn-danger:hover { background:#fee2e2; }
+.btn-success { background:#ecfdf5; color:#047857; }
+
+.card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+}
+.card:hover { border-color:#dfe3ee; }
+.empty { padding:64px 20px; text-align:center; color:var(--muted); }
+.empty-icon { font-size:40px; margin-bottom:14px; opacity:.6; }
+.empty-title { font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; }
+
+.badge { display:inline-flex; align-items:center; gap:5px; padding:5px 11px; border-radius:999px; font-size:12px; font-weight:700; }
+.badge-success { background:#ecfdf5; color:#047857; }
+.badge-warning { background:#fffbeb; color:#b45309; }
+.badge-danger { background:#fef2f2; color:#b91c1c; }
+
+.text-muted { color:var(--muted); }
+.hidden { display:none !important; }
+
+.form-group { display:grid; gap:8px; margin-bottom:18px; }
+.form-group label { font-weight:600; font-size:13.5px; color:var(--text-soft); }
+.form-control {
+  width:100%; border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 14px;
+  outline:none; background:var(--surface); color:var(--text); font-size:14.5px;
+  transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.form-control:hover { border-color:#cbd5e1; }
+.form-control:focus { border-color:var(--primary-light); box-shadow:0 0 0 4px rgba(99,102,241,.12); }
+
+.actions { display:flex; gap:10px; flex-wrap:wrap; }
+.spinner { width:30px; height:30px; border:3px solid #e0e7ff; border-top-color:var(--primary); border-radius:50%; animation:spin .8s linear infinite; margin:auto; }
+
+.toast-wrap { position:fixed; right:20px; top:20px; z-index:1000; display:grid; gap:10px; }
+.toast {
+  min-width:280px; max-width:360px; padding:13px 16px; border-radius:var(--radius-md); color:white;
+  font-size:14px; font-weight:500; background:#111327; box-shadow:var(--shadow-lg); animation:toastIn .25s ease;
+}
+.toast.success { background:#047857; }
+.toast.error { background:#b91c1c; }
+
+@keyframes spin { to { transform:rotate(360deg); } }
+@keyframes toastIn { from { opacity:0; transform:translateY(-10px) scale(.97); } to { opacity:1; transform:none; } }
+@keyframes fadeInPage { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+.animate-in { animation:fadeInPage .35s ease both; }
+
+@media(max-width:700px){
+  .container{width:min(100% - 24px,var(--container))}
+  .page-section{padding:36px 0}
+  .section-head{align-items:flex-start;flex-direction:column}
+  .toast-wrap{left:16px;right:16px;top:16px}
+  .toast{min-width:0;max-width:none}
+}

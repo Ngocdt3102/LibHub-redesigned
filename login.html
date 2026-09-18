@@ -1,0 +1,87 @@
+<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Đăng nhập - LibHub</title><link rel="stylesheet" href="css/variables.css"><link rel="stylesheet" href="css/reset.css"><link rel="stylesheet" href="css/global.css">
+<style>
+body{
+  display:grid;grid-template-columns:1fr 1fr;min-height:100vh;
+}
+.login-brand{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:60px;
+  background:linear-gradient(155deg,var(--primary-dark),var(--primary) 55%,var(--primary-2));color:white;
+}
+.login-brand:after{content:"";position:absolute;width:460px;height:460px;border-radius:50%;border:1px solid rgba(255,255,255,.14);right:-160px;bottom:-200px;}
+.login-brand:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,.12);left:-100px;top:-90px;}
+.login-brand-logo{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:800;position:relative;z-index:1}
+.login-brand-logo span{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:22px}
+.login-brand h1{font-size:clamp(28px,3vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin:28px 0 14px;max-width:420px;position:relative;z-index:1}
+.login-brand p{max-width:400px;opacity:.85;font-size:15.5px;position:relative;z-index:1}
+.login-side{display:flex;align-items:center;justify-content:center;padding:30px;background:var(--bg);}
+.login-form-wrap{width:min(400px,100%)}
+.login-form-wrap h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.login-form-wrap > p{margin-bottom:26px}
+.password-field{position:relative}
+.password-field input{padding-right:44px}
+.password-toggle{position:absolute;right:6px;top:6px;bottom:6px;width:34px;background:transparent;color:var(--muted);border-radius:8px}
+.password-toggle:hover{background:var(--surface-soft)}
+.demo{margin-top:22px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);font-size:13px;color:var(--muted)}
+.demo b{color:var(--text-soft)}
+.demo-row{display:flex;justify-content:space-between;padding:3px 0}
+@media(max-width:860px){
+  body{grid-template-columns:1fr}
+  .login-brand{display:none}
+}
+</style></head>
+<body>
+<div class="login-brand">
+  <div class="login-brand-logo"><span>📚</span> LibHub</div>
+  <h1>Digital library, built for focused reading.</h1>
+  <p>Tìm kiếm, đọc sách, lưu sách yêu thích và chia sẻ đánh giá với cộng đồng độc giả LibHub.</p>
+</div>
+<div class="login-side">
+  <div class="login-form-wrap">
+    <h2>Chào mừng trở lại</h2>
+    <p class="text-muted">Đăng nhập để tiếp tục vào LibHub.</p>
+    <form id="login-form">
+      <div class="form-group"><label>Tài khoản</label><input id="username" class="form-control" value="ngoc" required autocomplete="username"></div>
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <div class="password-field">
+          <input id="password" type="password" class="form-control" value="User@123" required autocomplete="current-password">
+          <button type="button" class="password-toggle" id="toggle-password" aria-label="Hiện mật khẩu">👁</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="login-submit" style="width:100%">Đăng nhập</button>
+    </form>
+    <div class="demo">
+      <strong style="color:var(--text)">Demo Accounts</strong>
+      <div class="demo-row"><span>Admin</span><b>admin / Admin@123</b></div>
+      <div class="demo-row"><span>User</span><b>ngoc / User@123</b></div>
+      <div class="demo-row"><span>User</span><b>linh / User@123</b></div>
+    </div>
+    <p style="margin-top:18px;text-align:center"><a href="index.html" style="color:var(--muted)">← Về trang chủ</a></p>
+  </div>
+</div>
+<script src="js/data/users.js"></script><script src="js/data/books.js"></script><script src="js/data/reviews.js"></script><script src="js/data/categories.js"></script>
+<script src="js/services/storage.js"></script><script src="js/services/user-service.js"></script><script src="js/utils/auth.js"></script><script src="js/utils/toast.js"></script>
+<script>
+Storage.seed();
+document.getElementById("toggle-password").onclick=()=>{
+  const p=document.getElementById("password");
+  const showing=p.type==="text";
+  p.type=showing?"password":"text";
+  document.getElementById("toggle-password").textContent=showing?"👁":"🙈";
+};
+document.getElementById("login-form").onsubmit=e=>{
+  e.preventDefault();
+  const btn=document.getElementById("login-submit");
+  const original=btn.textContent;
+  btn.disabled=true; btn.textContent="Đang đăng nhập...";
+  setTimeout(()=>{
+    if(Auth.login(username.value,password.value)){
+      location.href=Auth.current().role==="Admin"?"admin.html":"index.html";
+    } else {
+      btn.disabled=false; btn.textContent=original;
+      Toast.show("Tài khoản không tồn tại hoặc đã bị khóa.","error");
+    }
+  },350);
+};
+</script>
+</body></html>

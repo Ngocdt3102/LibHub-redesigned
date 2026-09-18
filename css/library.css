@@ -1,0 +1,15 @@
+.library-toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:12px; }
+.favorite-btn {
+  background:var(--surface); border:1px solid var(--border); width:38px; height:38px;
+  border-radius:50%; color:var(--muted); transition:.18s ease; flex-shrink:0;
+}
+.favorite-btn:hover { transform:scale(1.08); border-color:#fecdd3; color:#e11d48; }
+.favorite-btn.active { color:#e11d48; background:#fef2f2; border-color:#fecdd3; animation:pop .28s ease; }
+@keyframes pop { 0%{transform:scale(1)} 45%{transform:scale(1.28)} 100%{transform:scale(1)} }
+.pagination { display:flex; justify-content:center; gap:7px; margin-top:32px; }
+.pagination button {
+  width:38px; height:38px; border:1px solid var(--border); background:var(--surface);
+  border-radius:var(--radius-sm); transition:.18s ease; font-weight:600;
+}
+.pagination button:hover { border-color:var(--primary-light); color:var(--primary); }
+.pagination button.active { background:var(--primary); color:white; border-color:var(--primary); }

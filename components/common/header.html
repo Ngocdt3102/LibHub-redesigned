@@ -1,0 +1,26 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">📚</span> LibHub</a>
+    <nav class="main-nav">
+      <a href="index.html">Trang chủ</a><a href="books.html">Kho sách</a><a href="favorites.html">Yêu thích</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-light" data-admin-only href="admin.html">⚙ Admin</a>
+      <a href="profile.html"><img class="avatar" data-auth-avatar alt="avatar"></a>
+      <span class="user-name" data-auth-name></span>
+      <button class="btn btn-light" data-logout>Đăng xuất</button>
+      <button class="mobile-menu-btn" data-mobile-menu-open aria-label="Mở menu">☰</button>
+    </div>
+  </div>
+</header>
+<div class="mobile-nav-drawer" data-mobile-menu-drawer>
+  <div class="mobile-nav-panel">
+    <button class="mobile-nav-close" data-mobile-menu-close aria-label="Đóng menu">×</button>
+    <a href="index.html">Trang chủ</a>
+    <a href="books.html">Kho sách</a>
+    <a href="favorites.html">Yêu thích</a>
+    <a href="profile.html">Hồ sơ</a>
+    <a data-admin-only href="admin.html">⚙ Admin</a>
+    <a href="#" data-logout>Đăng xuất</a>
+  </div>
+</div>
