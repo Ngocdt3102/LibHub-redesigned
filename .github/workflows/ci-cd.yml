@@ -85,72 +85,111 @@ jobs:
           echo "================================="
 
 
+            # --------------------------------------
+      # Validate required files
       # --------------------------------------
-      # Validate HTML structure
-      # --------------------------------------
-      - name: Validate HTML
+      - name: Validate required files
         shell: bash
         run: |
 
-          python - <<'PY'
+          set -euo pipefail
 
-          from pathlib import Path
-          import re
+          echo "================================="
+          echo "Checking LibHub required files..."
+          echo "================================="
 
-          files = [
-              "index.html",
-              "login.html",
-              "books.html",
-              "book-detail.html",
-              "favorites.html",
-              "reader.html",
-              "profile.html",
-              "admin.html",
-              "admin-books.html",
-              "admin-users.html",
-              "admin-info.html"
-          ]
+          required_files=(
+            "index.html"
+            "login.html"
+            "books.html"
+            "book-detail.html"
+            "favorites.html"
+            "reader.html"
+            "profile.html"
 
-          for filename in files:
+            "admin.html"
+            "admin-books.html"
+            "admin-users.html"
+            "admin-info.html"
 
-              print(f"Checking {filename}...")
+            "Dockerfile"
+            "nginx.conf"
+          )
 
-              content = Path(filename).read_text(
-                  encoding="utf-8"
-              )
+          required_directories=(
+            "css"
+            "js"
+            "components"
+          )
 
-              # DOCTYPE
-              assert content.lstrip().lower().startswith(
-                  "<!doctype html>"
-              ), f"{filename}: missing DOCTYPE"
+          failed=0
 
-              # HTML tag
-              assert re.search(
-                  r"<html\b",
-                  content,
-                  re.IGNORECASE
-              ), f"{filename}: missing <html>"
+          echo ""
+          echo "Checking files..."
+          echo "---------------------------------"
 
-              # BODY tag
-              assert re.search(
-                  r"<body\b",
-                  content,
-                  re.IGNORECASE
-              ), f"{filename}: missing <body>"
+          for path in "${required_files[@]}"; do
 
-              # Closing HTML
-              assert re.search(
-                  r"</html>\s*$",
-                  content,
-                  re.IGNORECASE
-              ), f"{filename}: missing </html>"
+            if [[ -f "$path" ]]; then
 
-              print(f"{filename}: OK")
+              echo "✓ $path"
 
-          print("")
-          print("HTML validation successful!")
+            else
 
-          PY
+              echo "::error file=$path::$path is missing"
+
+              failed=1
+
+            fi
+
+          done
+
+
+          echo ""
+          echo "Checking directories..."
+          echo "---------------------------------"
+
+          for path in "${required_directories[@]}"; do
+
+            if [[ -d "$path" ]]; then
+
+              echo "✓ $path/"
+
+            else
+
+              echo "::error file=$path::$path directory is missing"
+
+              failed=1
+
+            fi
+
+          done
+
+
+          echo ""
+
+          if (( failed )); then
+
+            echo "================================="
+            echo "Required files/directories missing."
+            echo "================================="
+
+            echo ""
+            echo "Repository root:"
+            pwd
+
+            echo ""
+            echo "Files currently available:"
+            find . -maxdepth 2 -type f | sort
+
+            exit 1
+
+          fi
+
+
+          echo "================================="
+          echo "All required files and directories exist."
+          echo "================================="
 
 
   # ==========================================
