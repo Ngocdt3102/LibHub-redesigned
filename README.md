@@ -631,12 +631,6 @@ user-management-frontend-v2/
 │       ├── animation.js
 │       └── toast.js
 │
-├── assets/
-│   ├── logo/
-│   ├── books/
-│   ├── avatars/
-│   └── icons/
-│
 ├── Dockerfile
 ├── nginx.conf
 └── .github/

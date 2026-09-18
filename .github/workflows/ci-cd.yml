@@ -76,8 +76,6 @@ jobs:
           # Components
           test -d components
 
-          # Assets
-          test -d assets
 
           echo ""
           echo "================================="
